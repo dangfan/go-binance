@@ -2,8 +2,43 @@ package binance
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 )
+
+type SubscribeFlexibleService struct {
+	c         *Client
+	productId string
+	amount    float64
+}
+
+func (s *SubscribeFlexibleService) ProductId(productId string) *SubscribeFlexibleService {
+	s.productId = productId
+	return s
+}
+
+func (s *SubscribeFlexibleService) Amount(amount float64) *SubscribeFlexibleService {
+	s.amount = amount
+	return s
+}
+
+func (s *SubscribeFlexibleService) Do(ctx context.Context, opts ...RequestOption) error {
+	r := &request{
+		method:   http.MethodPost,
+		endpoint: "/sapi/v1/simple-earn/flexible/subscribe",
+		secType:  secTypeSigned,
+	}
+	m := params{
+		"productId": s.productId,
+		"amount":    fmt.Sprintf("%f", s.amount),
+	}
+	r.setParams(m)
+	_, err := s.c.callAPI(ctx, r, opts...)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 // ListSavingsFlexibleProductsService https://binance-docs.github.io/apidocs/spot/en/#get-flexible-product-list-user_data
 type ListSavingsFlexibleProductsService struct {

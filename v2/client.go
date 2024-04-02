@@ -21,6 +21,7 @@ import (
 	"github.com/adshao/go-binance/v2/delivery"
 	"github.com/adshao/go-binance/v2/futures"
 	"github.com/adshao/go-binance/v2/options"
+	"github.com/adshao/go-binance/v2/portfolio"
 )
 
 // SideType define side type of order
@@ -317,6 +318,11 @@ func NewOptionsClient(apiKey, secretKey string) *options.Client {
 	return options.NewClient(apiKey, secretKey)
 }
 
+// NewPortfolioClient initialize client for portfolio API
+func NewPortfolioClient(apiKey, secretKey string) *portfolio.Client {
+	return portfolio.NewClient(apiKey, secretKey)
+}
+
 type doFunc func(req *http.Request) (*http.Response, error)
 
 // Client define API client
@@ -557,6 +563,11 @@ func (c *Client) NewGetAccountService() *GetAccountService {
 // NewGetAPIKeyPermission init getting API key permission
 func (c *Client) NewGetAPIKeyPermission() *GetAPIKeyPermission {
 	return &GetAPIKeyPermission{c: c}
+}
+
+// NewSubscribeFlexibleService get flexible products positions (Savings)
+func (c *Client) NewSubscribeFlexibleService() *SubscribeFlexibleService {
+	return &SubscribeFlexibleService{c: c}
 }
 
 // NewSavingFlexibleProductPositionsService get flexible products positions (Savings)
