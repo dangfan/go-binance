@@ -9,7 +9,7 @@ import (
 type SubscribeFlexibleService struct {
 	c         *Client
 	productId string
-	amount    float64
+	amount    string
 }
 
 func (s *SubscribeFlexibleService) ProductId(productId string) *SubscribeFlexibleService {
@@ -17,7 +17,7 @@ func (s *SubscribeFlexibleService) ProductId(productId string) *SubscribeFlexibl
 	return s
 }
 
-func (s *SubscribeFlexibleService) Amount(amount float64) *SubscribeFlexibleService {
+func (s *SubscribeFlexibleService) Amount(amount string) *SubscribeFlexibleService {
 	s.amount = amount
 	return s
 }
